@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="codemirror/codemirror-5.65.16/lib/codemirror.js"></script>
+    <script src="codemirror/codemirror-5.65.16/theme/material.css"></script>
+    <link rel="stylesheet" href="codemirror/codemirror-5.65.16/lib/codemirror.css">
+    <script src="codemirror/codemirror-5.65.16/mode/xml/xml.js"></script>
+    <script src="codemirror/codemirror-5.65.16/mode/javascript/javascript.js"></script>
+    <script src="codemirror/codemirror-5.65.16/mode/css/css.js"></script>
+    <link rel="stylesheet" href="codemirror/codemirror-5.65.16/theme/darcula.css">
+    <script src="codemirror/codemirror-5.65.16/addon/edit/closetag.js"></script>
+    <script src="codemirror/codemirror-5.65.16/addon/edit/closebrackets.js"></script>
+    <script src="codemirror/codemirror-5.65.16/addon/hint/show-hint.js"></script>
+    <link rel="stylesheet" href="codemirror/codemirror-5.65.16/addon/hint/show-hint.css">
+    <script src="codemirror/codemirror-5.65.16/addon/hint/css-hint.js"></script>
+    <script src="codemirror/codemirror-5.65.16/addon/hint/html-hint.js"></script>
+    <script src="codemirror/codemirror-5.65.16/addon/hint/javascript-hint.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/27d5cd3f15.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+    <title>Editor</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <label class="editor-label"><i class="fa-brands fa-html5"></i> HTML<i class="fa-solid last fa-down-left-and-up-right-to-center" ></i></label>
+            <div class="editor"></div>
+
+            <label class="editor1-label"><i class="fa-brands fa-css3-alt"></i> Css<i class="fa-solid lastc fa-down-left-and-up-right-to-center"></i></label>
+            <div class="editor1"></div>
+
+            <label class="editor2-label"><i class="fa-brands fa-js"></i> JS<i class="fa-solid lastj fa-down-left-and-up-right-to-center"></i></label>
+            <div class="editor2"></div>
+        </div>
+        <div class="right">
+            <label><i class="fa-solid fa-play"></i>
+                <div class="header"><button id="run-btn">Run</button></div></label>
+            <iframe id="output"></iframe>
+        </div>
+        
+    </div>
+    <script>
+        const htmlEditor = CodeMirror(document.querySelector(".container .left .editor"),{
+            mode: "xml",
+            theme: "darcula",
+            lineNumbers: true,
+            autoCloseTags: true,
+            tabSize: 4,
+        });
+
+        const cssEditor = CodeMirror(document.querySelector(".container .left .editor1"),{
+            mode: "css",
+            theme: "darcula",
+            lineNumbers: true,
+            autoCloseBrackets: true,
+            tabSize: 4,
+        });
+
+        const jsEditor = CodeMirror(document.querySelector(".container .left .editor2"),{
+            mode: "javascript",
+            theme: "darcula",
+            lineNumbers: true,
+            autoCloseBrackets: true,
+            tabSize: 4
+        });
+
+        document.querySelector("#run-btn").addEventListener("click",function(){
+            let htmlCode =htmlEditor.getValue();
+            let cssCode = "<style>" + cssEditor.getValue() + "</style>";
+            let jsCode = "<scri" + "pt>" + jsEditor.getValue() + "</scri" + "pt>";
+            let outputs = document.querySelector("#output").contentWindow.document;
+            outputs.open();
+            outputs.write(htmlCode + cssCode + jsCode);
+            outputs.close();
+        });
+
+        let changeIcon = function(icon){
+            icon.classList.toggle('fa-solid fa-up-right-and-down-left-from-center')
+        }
+//js
+// JavaScript code
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleLabel = function(label, editor) {
+        label.addEventListener("click", function() {
+            editor.classList.toggle("hidden");
+        });
+    };
+
+    const htmlLabel = document.querySelector(".left .editor-label");
+    const cssLabel = document.querySelector(".left .editor1-label");
+    const jsLabel = document.querySelector(".left .editor2-label");
+
+    const htmlEditor = document.querySelector(".left .editor");
+    const cssEditor = document.querySelector(".left .editor1");
+    const jsEditor = document.querySelector(".left .editor2");
+
+    toggleLabel(htmlLabel, htmlEditor);
+    toggleLabel(cssLabel, cssEditor);
+    toggleLabel(jsLabel, jsEditor);
+});
+
+
+        
+
+
+
+    </script>
+</body>
+</html>
